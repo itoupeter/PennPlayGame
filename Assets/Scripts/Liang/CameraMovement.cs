@@ -6,9 +6,11 @@ public class CameraMovement : MonoBehaviour {
     public float speed;
 
     private Rigidbody rb;
+	private Transform mainCameraTransform;
 
     public void Start() {
         rb = GetComponent< Rigidbody >();
+		mainCameraTransform = this.gameObject.transform.GetChild(0);
     }
 
     public void FixedUpdate() {
@@ -31,6 +33,6 @@ public class CameraMovement : MonoBehaviour {
         //// Move the player to it's current position plus the movement.
         //transform.position = transform.position + movement;
 
-        rb.MovePosition( transform.position + speed * v * transform.forward + speed * h * transform.right );
+		rb.MovePosition(transform.position + speed * v * mainCameraTransform.forward + speed * h * mainCameraTransform.right);
     }
 }

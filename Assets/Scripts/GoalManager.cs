@@ -7,7 +7,7 @@ public class GoalManager : MonoBehaviour
 
     void Awake()
     {
-        InvokeRepeating("timer", 0f, 2f);
+        InvokeRepeating("timer", 0f, 100f);
     }
 
     void timer()
@@ -22,6 +22,6 @@ public class GoalManager : MonoBehaviour
             z = Random.Range(-border, border);
         }
         transform.position = new Vector3(x, 0f, z);
-        gameObject.SetActive(true);
+		gameObject.SetActive(true);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace CompleteProject
 {
@@ -6,7 +7,7 @@ namespace CompleteProject
     {
         public PlayerHealth playerHealth;       // Reference to the player's health.
 
-        Animator anim;                          // Reference to the animator component.
+        public Animator anim;                          // Reference to the animator component.
 
         void Awake ()
         {

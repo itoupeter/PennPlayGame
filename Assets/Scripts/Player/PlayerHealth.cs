@@ -44,7 +44,12 @@ namespace CompleteProject
 
         void Update ()
         {
-            if (totalTime >= 4f) Debug.Log("You win!");
+			if (totalTime >= 4f) {
+				Debug.Log("You win!");
+
+				GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().text = "You Win!";
+				GameObject.FindGameObjectWithTag("HUDCanvas").GetComponent<GameOverManager>().anim.SetTrigger("GameOver");
+			}
             // If the player has just been damaged...
             if (damaged)
             {
@@ -112,7 +117,10 @@ namespace CompleteProject
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
-            SceneManager.LoadScene (0);
+            //SceneManager.LoadScene (0);
+			playerMovement.enabled = true;
+			playerShooting.enabled = true;
+			GameManager.NextLife();
         }
     }
 }

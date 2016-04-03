@@ -22,6 +22,7 @@ namespace CompleteProject
             if(playerHealth.currentHealth <= 0)
             {
                 // ... tell the animator the game is over.
+				GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().text = "You Lose";
                 anim.SetTrigger ("GameOver");
             }
         }

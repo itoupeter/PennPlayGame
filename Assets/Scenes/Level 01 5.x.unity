@@ -1668,7 +1668,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 403532948}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 1
   m_Height: 1
   m_Direction: 1
@@ -5290,7 +5290,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13600000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8200000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
       propertyPath: panLevelCustomCurve.m_RotationOrder
@@ -5315,6 +5315,10 @@ Prefab:
     - target: {fileID: 8200000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
       propertyPath: m_Volume
       value: 0.028
+      objectReference: {fileID: 0}
+    - target: {fileID: 13600000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5400000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}

@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour {
     }
 
 	public static void NextLife() {
-		hero.GetComponent<Rigidbody>().MovePosition(Vector3.zero);
+		//hero.GetComponent<Rigidbody>().isKinematic = true;
+		//hero.GetComponent<Rigidbody>().MovePosition(Vector3.zero);
+		hero.transform.position = Vector3.zero;
 	}
         
 }

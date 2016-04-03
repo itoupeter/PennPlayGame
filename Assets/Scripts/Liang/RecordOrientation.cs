@@ -1,14 +1,7 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 
-#if UNITY_WINRT
-using File = UnityEngine.Windows.File;
-#else
-using File = System.IO.File;
-#endif
-
-public class RecordMovement : MonoBehaviour {
+public class RecordOrientation : MonoBehaviour {
 
     public string recordName;
 
@@ -23,16 +16,16 @@ public class RecordMovement : MonoBehaviour {
     private int replayIndex;
     private float replayStart;
     private float replayLast;
-    private Vector3 startPosition;
-    private Vector3 endPosition;
+    private Quaternion startOrientation;
+    private Quaternion endOrientation;
 
     // Use this for initialization
     void Start() {
         isRecording = false;
         isReplaying = false;
         recordSize = 10000;
-        recordData = new float[ 10000 << 2 ];
-        recordByte = new byte[ 10000 << 4 ];
+        recordData = new float[ 10000 * 5 ];
+        recordByte = new byte[ 10000 * 20 ];
     }
 
     // Update is called once per frame
@@ -43,10 +36,11 @@ public class RecordMovement : MonoBehaviour {
 
             if( recordLast + 0.5f< Time.time - recordStart ) {
                 recordLast = Time.time - recordStart;
-                recordData[ recordIndex << 2 ] = recordLast;
-                recordData[ recordIndex << 2 | 1 ] = transform.position.x;
-                recordData[ recordIndex << 2 | 2 ] = transform.position.y;
-                recordData[ recordIndex << 2 | 3 ] = transform.position.z;
+                recordData[ recordIndex * 5 ] = recordLast;
+                recordData[ recordIndex * 5 + 1 ] = transform.rotation.w;
+                recordData[ recordIndex * 5 + 2 ] = transform.rotation.x;
+                recordData[ recordIndex * 5 + 3 ] = transform.rotation.y;
+                recordData[ recordIndex * 5 + 4 ] = transform.rotation.z;
                 ++recordIndex;
             }
         }
@@ -54,17 +48,18 @@ public class RecordMovement : MonoBehaviour {
         //---replay by interpolating position---
         if( isReplaying ) {
 
-            if( recordData[ replayIndex << 2 ] < 0 ) {
+            if( recordData[ replayIndex * 5 ] < 0 ) {
                 Debug.Log( "Stop replaying..." );
                 isReplaying = false;
             }else {
-                if( Time.time - replayStart > recordData[ replayIndex << 2 ] ) {
+                if( Time.time - replayStart > recordData[ replayIndex * 5 ] ) {
                     ++replayIndex;
-                    startPosition = endPosition;
-                    endPosition = new Vector3( 
-                        recordData[ replayIndex << 2 | 1 ], 
-                        recordData[ replayIndex << 2 | 2 ], 
-                        recordData[ replayIndex << 2 | 3 ] 
+                    startOrientation = endOrientation;
+                    endOrientation = new Quaternion( 
+                        recordData[ replayIndex * 5 + 1 ], 
+                        recordData[ replayIndex * 5 + 2 ], 
+                        recordData[ replayIndex * 5 + 3 ], 
+                        recordData[ replayIndex * 5 + 4 ]
                         );
                 }
             }

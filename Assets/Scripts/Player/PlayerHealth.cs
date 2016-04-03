@@ -69,14 +69,15 @@ namespace CompleteProject
             if (error.magnitude < radius) totalTime += Time.deltaTime;
 
 			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-			GameObject tMin = null;
+			//Debug.Log(enemies.Length);
+			//GameObject tMin = null;
 			float minDist2 = Mathf.Infinity;
 			foreach (GameObject go in enemies) {
-				Vector3 distVec =go.transform.position - transform.position;
+				Vector3 distVec = go.transform.position - transform.position;
 				float dist2 = distVec.sqrMagnitude;
 				if (dist2 < minDist2) {
 					minDist2 = dist2;
-					tMin = go;
+					//tMin = go;
 					nearestEnemy = go;
 				}
 			}

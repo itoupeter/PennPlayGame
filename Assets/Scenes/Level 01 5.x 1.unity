@@ -1630,7 +1630,7 @@ GameObject:
   - 136: {fileID: 403532951}
   m_Layer: 0
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5359,6 +5359,18 @@ Prefab:
     - target: {fileID: 13600000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11488306, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19555894, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19555894, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}
+      propertyPath: m_Radius
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5400000, guid: 4e5a0d387dc27394b81600988ad0216f, type: 2}

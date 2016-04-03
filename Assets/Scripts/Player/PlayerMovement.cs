@@ -31,15 +31,28 @@ namespace CompleteProject
 
         void FixedUpdate ()
         {
+            if( Input.GetKeyDown( KeyCode.F ) ) {
+                GetComponent< RecordMovement >().StartRecord();
+                GetComponent< RecordOrientation >().StartRecord();
+            }
+            if( Input.GetKeyDown( KeyCode.G ) ) {
+                GetComponent< RecordMovement >().StopRecord();
+                GetComponent< RecordOrientation >().StopRecord();
+            }
+            if( Input.GetKeyDown( KeyCode.H ) ) {
+                GetComponent< RecordMovement >().StartReplay();
+                GetComponent< RecordOrientation >().StartReplay();
+            }
+
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            Move (h, v);
+            //Move (h, v);
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+            //Turning ();
 
             // Animate the player.
             Animating (h, v);
@@ -111,7 +124,7 @@ namespace CompleteProject
             bool walking = h != 0f || v != 0f;
 
             // Tell the animator whether or not the player is walking.
-            anim.SetBool ("IsWalking", walking);
+            anim.SetBool ("IsWalking", true || walking);
         }
     }
 }

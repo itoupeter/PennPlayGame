@@ -1,5 +1,12 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+
+#if UNITY_WINRT
+using File = UnityEngine.Windows.File;
+#else
+using File = System.IO.File;
+#endif
 
 public class RecordOrientation : MonoBehaviour {
 
@@ -23,18 +30,18 @@ public class RecordOrientation : MonoBehaviour {
     void Start() {
         isRecording = false;
         isReplaying = false;
-        recordSize = 10000;
-        recordData = new float[ 10000 * 5 ];
-        recordByte = new byte[ 10000 * 20 ];
+        recordSize = 100000;
+        recordData = new float[ recordSize * 5 ];
+        recordByte = new byte[ recordSize * 20 ];
     }
 
     // Update is called once per frame
     void Update() {
         
-        //---record time and position about every 200ms---
+        //---record time and orientation about every 200ms---
         if( isRecording ) {
 
-            if( recordLast + 0.5f< Time.time - recordStart ) {
+            if( recordLast + 0.1f < Time.time - recordStart ) {
                 recordLast = Time.time - recordStart;
                 recordData[ recordIndex * 5 ] = recordLast;
                 recordData[ recordIndex * 5 + 1 ] = transform.rotation.w;
@@ -45,7 +52,7 @@ public class RecordOrientation : MonoBehaviour {
             }
         }
 
-        //---replay by interpolating position---
+        //---replay by interpolating orientation---
         if( isReplaying ) {
 
             if( recordData[ replayIndex * 5 ] < 0 ) {
@@ -56,19 +63,19 @@ public class RecordOrientation : MonoBehaviour {
                     ++replayIndex;
                     startOrientation = endOrientation;
                     endOrientation = new Quaternion( 
-                        recordData[ replayIndex * 5 + 1 ], 
                         recordData[ replayIndex * 5 + 2 ], 
                         recordData[ replayIndex * 5 + 3 ], 
-                        recordData[ replayIndex * 5 + 4 ]
+                        recordData[ replayIndex * 5 + 4 ], 
+                        recordData[ replayIndex * 5 + 1 ]
                         );
                 }
             }
 
-            if( isReplaying ) {
-                float t = ( Time.time - replayStart - recordData[ replayIndex - 1 << 2 ] ) 
-                    / ( ( recordData[ replayIndex << 2 ] ) - ( recordData[ replayIndex - 1 << 2 ] ) );
+            if( isReplaying && replayIndex > 0 ) {
+                float t = ( Time.time - replayStart - recordData[ ( replayIndex - 1 ) * 5 ] ) 
+                    / ( ( recordData[ replayIndex * 5 ] ) - ( recordData[ ( replayIndex - 1 ) * 5 ] ) );
 
-                transform.position = Vector3.Lerp( startPosition, endPosition, t );
+                transform.rotation = Quaternion.Lerp( startOrientation, endOrientation, t );
             }
         }
     }
@@ -86,9 +93,10 @@ public class RecordOrientation : MonoBehaviour {
         recordStart = Time.time;
         recordLast = 0.0f;
         recordData[ 0 ] = 0.0f;
-        recordData[ 1 ] = transform.position.x;
-        recordData[ 2 ] = transform.position.y;
-        recordData[ 3 ] = transform.position.z;
+        recordData[ 1 ] = transform.rotation.w;
+        recordData[ 2 ] = transform.rotation.x;
+        recordData[ 3 ] = transform.rotation.y;
+        recordData[ 4 ] = transform.rotation.z;
         recordIndex = 1;
     }
 
@@ -97,8 +105,8 @@ public class RecordOrientation : MonoBehaviour {
         Debug.Log( "Stop recording..." );
 
         isRecording = false;
-        recordData[ recordIndex << 2 ] = -1.0f;
-        Buffer.BlockCopy( recordData, 0, recordByte, 0, recordSize << 4 );
+        recordData[ recordIndex * 5 ] = -1.0f;
+        Buffer.BlockCopy( recordData, 0, recordByte, 0, recordSize * 20 );
         File.WriteAllBytes( recordName + ".rec", recordByte );
     }
     
@@ -108,11 +116,11 @@ public class RecordOrientation : MonoBehaviour {
         
         isReplaying = true;
         recordByte = File.ReadAllBytes( recordName + ".rec" );
-        Buffer.BlockCopy( recordByte, 0, recordData, 0, recordSize << 4 );
+        Buffer.BlockCopy( recordByte, 0, recordData, 0, recordSize * 20 );
         replayStart = Time.time;
         replayLast = 0.0f;
-        transform.position = new Vector3( recordData[ 1 ], recordData[ 2 ], recordData[ 3 ] );
-        endPosition = transform.position;
+        transform.rotation = new Quaternion( recordData[ 2 ], recordData[ 3 ], recordData[ 4 ], recordData[ 1 ] );
+        endOrientation = transform.rotation;
         replayIndex = 0;
     }
 }

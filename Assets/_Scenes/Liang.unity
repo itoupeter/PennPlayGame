@@ -369,8 +369,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1687767141}
   - 114: {fileID: 1687767143}
-  - 114: {fileID: 1687767142}
   - 114: {fileID: 1687767144}
+  - 114: {fileID: 1687767142}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Player
@@ -426,6 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d749f9ddfdc204f8d3264aa8819353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recordName: HeroOrientation
 --- !u!1 &1875509004
 GameObject:
   m_ObjectHideFlags: 0

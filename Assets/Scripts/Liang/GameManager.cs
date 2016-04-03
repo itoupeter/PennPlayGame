@@ -14,16 +14,18 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 	    
         if( Input.GetKeyDown( KeyCode.F ) ) {
-            player.GetComponent< RecordMovement >().StartRecord();
+            player.GetComponent<RecordMovement>().StartRecord();
+            player.GetComponent<RecordOrientation>().StartRecord();
         }
 
         if( Input.GetKeyUp( KeyCode.F ) ) {
-            player.GetComponent< RecordMovement >().StopRecord();
+            player.GetComponent<RecordMovement>().StopRecord();
+            player.GetComponent<RecordOrientation>().StopRecord();
         }
 
         if( Input.GetKeyDown( KeyCode.G ) ) {
-            player.GetComponent< RecordMovement >().StartReplay();
-            player.GetComponent< MoveForward >().speed = 0.0f;
+            player.GetComponent<RecordMovement>().StartReplay();
+            player.GetComponent<RecordOrientation>().StartReplay();
         }
 
     }

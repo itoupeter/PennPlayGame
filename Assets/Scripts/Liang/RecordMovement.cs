@@ -30,9 +30,9 @@ public class RecordMovement : MonoBehaviour {
     void Start() {
         isRecording = false;
         isReplaying = false;
-        recordSize = 10000;
-        recordData = new float[ 10000 << 2 ];
-        recordByte = new byte[ 10000 << 4 ];
+        recordSize = 100000;
+        recordData = new float[ recordSize << 2 ];
+        recordByte = new byte[ recordSize << 4 ];
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class RecordMovement : MonoBehaviour {
         //---record time and position about every 200ms---
         if( isRecording ) {
 
-            if( recordLast + 0.5f< Time.time - recordStart ) {
+            if( recordLast + 0.1f< Time.time - recordStart ) {
                 recordLast = Time.time - recordStart;
                 recordData[ recordIndex << 2 ] = recordLast;
                 recordData[ recordIndex << 2 | 1 ] = transform.position.x;
@@ -69,7 +69,7 @@ public class RecordMovement : MonoBehaviour {
                 }
             }
 
-            if( isReplaying ) {
+            if( isReplaying && replayIndex > 0 ) {
                 float t = ( Time.time - replayStart - recordData[ replayIndex - 1 << 2 ] ) 
                     / ( ( recordData[ replayIndex << 2 ] ) - ( recordData[ replayIndex - 1 << 2 ] ) );
 

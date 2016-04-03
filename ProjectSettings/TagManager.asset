@@ -8,11 +8,8 @@ TagManager:
   - GameOverText
   - Hero
   - Goal
-<<<<<<< HEAD
   - Enemy
-=======
   - Player2
->>>>>>> origin/master
   layers:
   - Default
   - TransparentFX

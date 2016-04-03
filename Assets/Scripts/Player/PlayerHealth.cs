@@ -87,6 +87,10 @@ namespace CompleteProject
             if(currentHealth <= 0 && !isDead)
             {
                 // ... it should die.
+                if( GameObject.FindGameObjectWithTag( "Player2" ) == null ) {
+                    gameObject.GetComponent< RecordMovement >().StopRecord();
+                    gameObject.GetComponent< RecordOrientation >().StopRecord();
+                }
                 Death ();
             }
         }
@@ -115,7 +119,7 @@ namespace CompleteProject
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
-            SceneManager.LoadScene (0);
+            SceneManager.LoadScene (1);
 			//playerMovement.enabled = true;
 			//playerShooting.enabled = true;
 			//GameManager.NextLife();

@@ -15,6 +15,7 @@ namespace CompleteProject
         public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
         public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
 
+		public GameObject nearestEnemy;
 
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
@@ -66,6 +67,19 @@ namespace CompleteProject
             
             Vector3 error = clone.transform.position - transform.position;
             if (error.magnitude < radius) totalTime += Time.deltaTime;
+
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+			GameObject tMin = null;
+			float minDist2 = Mathf.Infinity;
+			foreach (GameObject go in enemies) {
+				Vector3 distVec =go.transform.position - transform.position;
+				float dist2 = distVec.sqrMagnitude;
+				if (dist2 < minDist2) {
+					minDist2 = dist2;
+					tMin = go;
+					nearestEnemy = go;
+				}
+			}
         }
 
 

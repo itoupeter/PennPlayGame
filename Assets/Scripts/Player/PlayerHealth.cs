@@ -23,6 +23,10 @@ namespace CompleteProject
         bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
 
+        GameObject clone;                                           // Clone of goal
+        public GameObject goal;                                     // Goal
+        float totalTime = 0f;                                       // The amount of time the player has achieved.
+        float radius = 3f;                                          // The radius of time winning circle
 
         void Awake ()
         {
@@ -31,6 +35,7 @@ namespace CompleteProject
             playerAudio = GetComponent <AudioSource> ();
             playerMovement = GetComponent <PlayerMovement> ();
             playerShooting = GetComponentInChildren <PlayerShooting> ();
+            clone = Instantiate(goal) as GameObject;
 
             // Set the initial health of the player.
             currentHealth = startingHealth;
@@ -39,8 +44,9 @@ namespace CompleteProject
 
         void Update ()
         {
+            if (totalTime >= 4f) Debug.Log("You win!");
             // If the player has just been damaged...
-            if(damaged)
+            if (damaged)
             {
                 // ... set the colour of the damageImage to the flash colour.
                 damageImage.color = flashColour;
@@ -54,6 +60,9 @@ namespace CompleteProject
 
             // Reset the damaged flag.
             damaged = false;
+            
+            Vector3 error = clone.transform.position - transform.position;
+            if (error.magnitude < radius) totalTime += Time.deltaTime;
         }
 
 
@@ -99,8 +108,7 @@ namespace CompleteProject
             playerMovement.enabled = false;
             playerShooting.enabled = false;
         }
-
-
+        
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.

@@ -80,7 +80,7 @@ public class RecordMovement : MonoBehaviour {
 
     public void StartRecord() {
 
-        Debug.Log( "Start recording..." );
+        Debug.Log( "Start recording position..." );
 
         if( recordName == null ) {
             Debug.LogError( "Record file not specified!" );

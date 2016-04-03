@@ -82,7 +82,7 @@ public class RecordOrientation : MonoBehaviour {
 
     public void StartRecord() {
 
-        Debug.Log( "Start recording..." );
+        Debug.Log( "Start recording orientation..." );
 
         if( recordName == null ) {
             Debug.LogError( "Record file not specified!" );
